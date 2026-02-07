@@ -1,11 +1,11 @@
-# Use lightweight Java runtime
-FROM openjdk:17-jdk-slim
+# Use official Java 17 runtime
+FROM eclipse-temurin:17-jdk
 
-# Copy jar file into container
+# Copy built jar into container
 COPY target/*.jar app.jar
 
-# Expose port (Render uses 8080)
-EXPOSE 8080
+# Expose application port
+EXPOSE 8081
 
-# Run the application
+# Run Spring Boot app
 ENTRYPOINT ["java","-jar","/app.jar"]
