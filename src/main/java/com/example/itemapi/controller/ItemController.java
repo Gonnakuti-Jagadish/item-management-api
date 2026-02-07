@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.itemapi.Service.ItemService;
 import com.example.itemapi.model.Item;
+import com.example.itemapi.service.ItemService;
 
 import jakarta.validation.Valid;
 
@@ -26,6 +26,11 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<Item> addItem(@Valid @RequestBody Item item) {
         return ResponseEntity.ok(itemService.addItem(item));
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "API is working";
     }
 
     // Get Item by ID

@@ -1,4 +1,4 @@
-package com.example.itemapi.Service;
+package com.example.itemapi.service;
 
 import java.util.ArrayList;
 import java.util.List;
