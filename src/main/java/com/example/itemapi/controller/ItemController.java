@@ -1,0 +1,40 @@
+package com.example.itemapi.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.itemapi.Service.ItemService;
+import com.example.itemapi.model.Item;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/api/items")
+public class ItemController {
+	private final ItemService itemService;
+
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
+    }
+
+    // Add Item
+    @PostMapping
+    public ResponseEntity<Item> addItem(@Valid @RequestBody Item item) {
+        return ResponseEntity.ok(itemService.addItem(item));
+    }
+
+    // Get Item by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Item> getItem(@PathVariable Long id) {
+        Item item = itemService.getItemById(id);
+        if (item == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(item);
+    }
+}
