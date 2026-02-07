@@ -1,11 +1,17 @@
-# Use official Java 17 runtime
+# ---------- Stage 1: Build JAR using Maven ----------
+FROM maven:3.9.9-eclipse-temurin-17 AS builder
+
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+
+# ---------- Stage 2: Run the JAR ----------
 FROM eclipse-temurin:17-jdk
 
-# Copy built jar into container
-COPY target/*.jar app.jar
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
 
-# Expose application port
 EXPOSE 8081
 
-# Run Spring Boot app
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
